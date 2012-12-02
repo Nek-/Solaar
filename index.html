@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Solaar : Linux devices manager for the Logitech Unifying Receiver." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Solaar</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pwr/Solaar">View on GitHub</a>
+
+          <h1 id="project_title">Solaar</h1>
+          <h2 id="project_tagline">Linux devices manager for the Logitech Unifying Receiver.</h2>
+
+            <section id="downloads">
+              <a class="tar_download_link" href="https://github.com/pwr/Solaar/archive/0.8.6.2.tar.gz">Solaar 0.8.6.2</a>
+              <p>
+                <span style="color: #fff">Latest version:</span>
+                <br/>
+                <span style="float: right; font-weight: bolder;">0.8.6.2</span>
+              </p>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><strong>Solaar</strong> is a Linux device manager for Logitech's
+<a href="http://logitech.com/en-us/66/6079">Unifying Receiver</a> peripherals. It is
+able to pair/unpair devices to the receiver, and for some devices read battery
+status.</p>
+
+<p>It comes in two flavors, command-line and GUI.  Both are able to list the
+devices paired to a Unifying Receiver, show detailed info for each device, and
+also pair/unpair supported devices with the receiver.</p>
+
+<h2>Supported Devices</h2>
+
+<p><strong>Solaar</strong> will detect all devices paired with your Unifying Receiver, and at
+the very least display some basic information about them.  Depending on the
+device, it may be able to read its battery status.</p>
+
+<p>A few devices also have extended support, mostly because I was able to directly
+test on them:</p>
+
+<ul>
+<li>
+<p>The <a href="http://logitech.com/keyboards/keyboard/devices/7454">K750 Solar Keyboard</a>
+is also queried for its solar charge status. Pressing the Solar key on the
+keyboard will pop-up the application window and display the current lighting
+value (Lux) as reported by the keyboard, similar to Logitech's <em>Solar.app</em> for
+Windows.</p>
+
+<p>Also, you can change the way the function keys (<code>F1</code>..<code>F12</code>) work, i.e.
+whether holding <code>FN</code> while pressing the function keys will generate the
+standard keycodes or the special function (yellow icons) keycodes.</p>
+</li>
+<li><p>The <a href="http://logitech.com/product/marathon-mouse-m705">M705 Marathon Mouse</a>
+and <a href="http://logitech.com/product/anywhere-mouse-mx">Anywhere MX Mouse</a>
+support turning on/off Smooth Scrolling (higher sensitivity on vertical
+scrolling with the wheel).</p></li>
+</ul><p>Extended support for other devices may be added in the future, depending on the
+documentation available, but the K750 keyboard and M705 mouse are the only
+devices I have and can test on right now.</p>
+
+<h2>Pre-built packages</h2>
+
+<p>Pre-built packages are available for Debian unstable (<a href="packages/solaar_0.8.6.2-1_all.deb">.deb</a>)
+and Ubuntu 12.04+ (<a href="http://launchpad.net/~daniel.pavel/+archive/solaar">ppa:daniel.pavel/solaar</a>).
+
+<h2>Manual installation</h2>
+
+<h3>Requirements</h3>
+
+<p>You should have a reasonably new kernel (3.2+), with the <code>logitech-djreceiver</code>
+driver enabled and loaded; also, the <code>udev</code> package must be installed and the
+daemon running.  If you have a modern Linux distribution (2011+), you're most
+likely good to go.</p>
+
+<p>The command-line application (<code>bin/solaar-cli</code>) requires Python 2.7.3 or 3.2+
+(either version should work), and the <code>python-pyudev</code>/<code>python3-pyudev</code> package.</p>
+
+<p>The GUI application (<code>bin/solaar</code>) also requires Gtk3, and its GObject
+Introspection bindings. The Debian/Ubuntu package names are
+<code>python-gi</code>/<code>python3-gi</code> and <code>gir1.2-gtk-3.0</code>; if you're using another
+distribution the required packages are most likely named something similar.
+If the desktop notifications bindings are also installed (<code>gir1.2-notify-0.7</code>),
+you will also get desktop notifications when devices come online/go offline.</p>
+
+<h3>Installation</h3>
+
+<p>Normally USB devices are not accessible for r/w by regular users, so you will
+need to do a one-time udev rule installation to allow access to the Logitech
+Unifying Receiver.</p>
+
+<p>You can run the <code>rules.d/install.sh</code> script from Solaar to do this installation
+automatically (it will switch to root when necessary), or you can do all the
+required steps by hand, as the root user:</p>
+
+<ol>
+<li>
+<p>copy <code>rules.d/99-logitech-unfiying-receiver.rules</code> from Solaar to
+<code>/etc/udev/rules.d/</code></p>
+
+<p>By default, the rule makes the Unifying Receiver device available for r/w by
+all users belonging to the <code>plugdev</code> system group (standard Debian/Ubuntu
+group for pluggable devices). It may need changes, specific to your
+particular system's configuration. If in doubt, replacing <code>GROUP="plugdev"</code>
+with <code>GROUP="&lt;your username&gt;"</code> should just work.</p>
+</li>
+<li><p>run <code>udevadm control --reload-rules</code> to let the udev daemon know about the new
+rule</p></li>
+<li><p>physically remove the Unifying Receiver, wait 10 seconds and re-insert it</p></li>
+</ol><h2>Known Issues</h2>
+
+<ul>
+<li>
+<p>When running under Ubuntu's Unity, the tray icon will probably not appear, nor
+will the application window.  Either run the application with the '-S' option,
+or whitelist "Solaar" into the systray. For details, see
+<a href="http://askubuntu.com/questions/30742/how-do-i-access-and-enable-more-icons-to-be-in-the-system-tray">How do I access and enable more icons to be in the system tray?</a>.</p>
+
+<p>Support for Unity's indicators is a planned feature.</p>
+</li>
+<li><p>Running the command-line application (<code>bin/solaar-cli</code>) while the GUI
+application is also running <em>may</em> occasionally cause either of them to become
+confused about the state of the devices. I haven't encountered this often
+enough to be able to be able to diagnose it properly yet.</p></li>
+</ul><h2>Thanks</h2>
+
+<p>This project began as a third-hand clone of <a href="https://github.com/noah">Noah K. Tilton</a>'s
+logitech-solar-k750 project on GitHub (no longer available). It was developed
+further thanks to the diggings in Logitech's HID++ protocol done by many other
+people:</p>
+
+<ul>
+<li>
+<a href="http://julien.danjou.info/blog/2012/logitech-k750-linux-support">Julien Danjou</a>,
+who also provided some internal
+<a href="http://julien.danjou.info/blog/2012/logitech-unifying-upower">Logitech documentation</a>
+</li>
+<li><a href="http://6xq.net/git/lars/lshidpp.git">Lars-Dominik Braun</a></li>
+<li><a href="http://derhofbauer.at/blog/blog/2012/08/28/logitech-performance-mx">Alexander Hofbauer</a></li>
+<li><a href="http://bitbucket.org/clach04/logitech-unifying-receiver-tools">Clach04</a></li>
+</ul><p>Also thanks to Douglas Wagner and Julien Gascard for helping with application
+testing and supporting new devices.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Solaar maintained by <a href="https://github.com/pwr">pwr</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-36908718-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
