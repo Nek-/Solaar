@@ -1,5 +1,0 @@
-solaar (0.8.6-1) UNRELEASED; urgency=low
-
-  * Debian packaging scripts, supports ubuntu ppa as well.
-
- -- Daniel Pavel <daniel.pavel@gmail.com>  Tue, 08 Jan 2013 01:00:00 +0200
