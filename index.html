@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Solaar : Linux devices manager for the Logitech Unifying Receiver." />
+<head>
+<meta charset='utf-8' />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+<meta name="description" content="Solaar : Linux devices manager for the Logitech Unifying Receiver." />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>Solaar</title>
   </head>
@@ -52,19 +52,20 @@ the very least display some basic information about them.</p>
 Linux system configuration) are supported:</p>
 
 <ul>
-<li><p>The <a href="http://logitech.com/product/k750-keyboard">K750 Solar Keyboard</a> is also queried for its solar charge status.
+<li>The <a href="http://logitech.com/product/k750-keyboard">K750 Solar Keyboard</a> is also queried for its solar charge status.
 Pressing the <code>Solar</code> key on the keyboard will pop-up the application window
 and display the current lighting value (Lux) as reported by the keyboard,
-similar to Logitech's <em>Solar.app</em> for Windows.</p></li>
-<li><p>The state of the <code>FN</code> key can be toggled on some keyboards (<a href="http://logitech.com/product/k750-keyboard">K750</a>,
+similar to Logitech's <em>Solar.app</em> for Windows.</li>
+<li>The state of the <code>FN</code> key can be toggled on some keyboards (<a href="http://logitech.com/product/k750-keyboard">K750</a>,
 <a href="http://logitech.com/product/wireless-illuminated-keyboard-k800">K800</a> and <a href="http://logitech.com/product/keyboard-k360">K360</a>). It changes the way the function keys
 (<code>F1</code>..<code>F12</code>) work, i.e. whether holding <code>FN</code> while pressing the function keys
 will generate the standard <code>Fx</code> keycodes or the special function (yellow
-icons) keycodes.</p></li>
-<li><p>The DPI can be changed on the <a href="http://logitech.com/product/performance-mouse-mx">Performance MX Mouse</a>.</p></li>
-<li><p>Smooth scrolling (higher sensitivity on vertical scrolling with the wheel) can
-be toggled on the <a href="http://logitech.com/product/marathon-mouse-m705">M705 Marathon Mouse</a> and <a href="http://logitech.com/product/anywhere-mouse-mx">Anywhere MX Mouse</a>.</p></li>
-</ul><p>Extended support for other devices may be added in the future, depending on the
+icons) keycodes.</li>
+<li>The DPI can be changed on the <a href="http://logitech.com/product/performance-mouse-mx">Performance MX Mouse</a>.</li>
+<li>Smooth scrolling (higher sensitivity on vertical scrolling with the wheel) can
+be toggled on the <a href="http://logitech.com/product/marathon-mouse-m705">M705 Marathon Mouse</a> and <a href="http://logitech.com/product/anywhere-mouse-mx">Anywhere MX Mouse</a>.</li>
+</ul>
+<p>Extended support for other devices may be added in the future, depending on the
 documentation available, but the K750 keyboard and M705 mouse are the only
 devices I have and can directly test on right now.</p>
 
@@ -73,7 +74,7 @@ devices I have and can directly test on right now.</p>
 <p>Pre-built packages are available for a few Linux distros:</p>
 
 <ul>
-<li>Ubuntu 12.04+: <a href="httwp://launchpad.net/%7Edaniel.pavel/+archive/solaar">ppa:daniel.pavel/Solaar</a>
+<li>Ubuntu 12.04+: <a href="http://launchpad.net/%7Edaniel.pavel/+archive/solaar">ppa:daniel.pavel/Solaar</a>
 </li>
 <li>a Debian/sid package: <a href="http://pwr.github.com/Solaar/packages/solaar_0.8.7-1_all.deb">.deb</a>
 </li>
@@ -110,9 +111,8 @@ automatically (it will switch to root when necessary), or you can do all the
 required steps by hand, as the root user:</p>
 
 <ol>
-<li>
-<p>copy <code>rules.d/99-logitech-unfiying-receiver.rules</code> from Solaar to
-<code>/etc/udev/rules.d/</code></p>
+<li>copy <code>rules.d/99-logitech-unfiying-receiver.rules</code> from Solaar to
+<code>/etc/udev/rules.d/</code>
 
 <p>By default, the rule makes the Unifying Receiver device available for r/w by
 all users belonging to the <code>plugdev</code> system group (standard Debian/Ubuntu
@@ -120,24 +120,24 @@ group for pluggable devices). It may need changes, specific to your
 particular system's configuration. If in doubt, replacing <code>GROUP="plugdev"</code>
 with <code>GROUP="&lt;your username&gt;"</code> should just work.</p>
 </li>
-<li><p>run <code>udevadm control --reload-rules</code> to let the udev daemon know about the
-new rule</p></li>
-<li><p>physically remove the Unifying Receiver, wait 10 seconds and re-insert it</p></li>
+<li>run <code>udevadm control --reload-rules</code> to let the udev daemon know about the
+new rule</li>
+<li>physically remove the Unifying Receiver, wait 10 seconds and re-insert it</li>
 </ol><h2>Known Issues</h2>
 
 <ul>
-<li><p>Ubuntu's Unity indicators are not supported at this time. However, if you
+<li>Ubuntu's Unity indicators are not supported at this time. However, if you
 whitelist 'Solaar' in the systray, you will get an icon (see
-<a href="http://askubuntu.com/questions/30742">Enable more icons to be in the system tray?</a> for details).</p></li>
-<li><p>The application only looks at the first Unifying Receiver it finds, even if
+<a href="http://askubuntu.com/questions/30742">Enable more icons to be in the system tray?</a> for details).</li>
+<li>The application only looks at the first Unifying Receiver it finds, even if
 there's more than one plugged in. Support for multiple receivers is in
-progress.</p></li>
-<li><p>Devices connected throught a <a href="http://logitech.com/mice-pointers/articles/5926">Nano Receiver</a> (which is very similar to
-the Unifying Receiver) are not supported at this time.</p></li>
-<li><p>Running the command-line application (<code>bin/solaar-cli</code>) while the GUI
+progress.</li>
+<li>Devices connected throught a <a href="http://logitech.com/mice-pointers/articles/5926">Nano Receiver</a> (which is very similar to
+the Unifying Receiver) are not supported at this time.</li>
+<li>Running the command-line application (<code>bin/solaar-cli</code>) while the GUI
 application is also running <em>may</em> occasionally cause either of them to become
 confused about the state of the devices. I haven't encountered this often
-enough to be able to be able to diagnose it properly yet.</p></li>
+enough to be able to be able to diagnose it properly yet.</li>
 </ul><h2>Thanks</h2>
 
 <p>This project began as a third-hand clone of <a href="https://github.com/noah">Noah K. Tilton</a>'s
@@ -154,7 +154,8 @@ who also provided some internal
 <li><a href="http://6xq.net/git/lars/lshidpp.git">Lars-Dominik Braun</a></li>
 <li><a href="http://derhofbauer.at/blog/blog/2012/08/28/logitech-performance-mx">Alexander Hofbauer</a></li>
 <li><a href="http://bitbucket.org/clach04/logitech-unifying-receiver-tools">Clach04</a></li>
-</ul><p>Also thanks to Douglas Wagner and Julien Gascard for helping with application
+</ul>
+<p>Also thanks to Douglas Wagner and Julien Gascard for helping with application
 testing and supporting new devices.</p>
 
 <h2></h2>
